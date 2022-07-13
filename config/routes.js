@@ -20,6 +20,11 @@ module.exports = (app, passport, auth) => {
   router.get("/login", users.login);
   router.get("/signup", users.signup);
   router.get("/logout", users.logout);
+  router.post(
+    "/auth/local",
+    passport.authenticate("local", { failureRedirect: "/login" }),
+    users.authCallback
+  );
 
   /**
    * Authentication routes
@@ -35,12 +40,17 @@ module.exports = (app, passport, auth) => {
     users.authCallback
   );
 
+
+  router.post(
+    "/signup/local",
+    users.signup
+  );
   /**
    * API routes
    */
   router.get("/apiv1/tweets", apiv1.tweetList);
   router.get("/apiv1/users", apiv1.usersList);
-
+  router.post("/users", users.create);
   /**
    * Authentication middleware
    * All routes specified after this middleware require authentication in order
@@ -68,7 +78,7 @@ module.exports = (app, passport, auth) => {
   router.get("/users/:userId", users.show);
   router.get("/users/:userId/followers", users.showFollowers);
   router.get("/users/:userId/following", users.showFollowing);
-  router.post("/users", users.create);
+  
   router.post(
     "/users/sessions",
     passport.authenticate("local", {

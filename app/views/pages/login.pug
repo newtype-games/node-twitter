@@ -2,15 +2,35 @@ extends ../layouts/default
 
 block content
   .row
-    .col-md-4.login-container
+    .col-md-6.login-container
       h1 Node Twitter
-
-        h3
-          a(href="/auth/github", class="btn btn-primary btn-lg btn-block login-btn")
-            span.login-using-github Login using github
-            span(class="icon-container")
-              i(class="fab fa-github fa-2x")
-
+      .row.justify-content-center.text-center
+        form.signup_form(action='/auth/local', method='post')
+          .row
+            .col-md-6
+              label(for='email') email
+            .col-md-6
+              input(type="text", name='email', value='', placeholder="type in ur email")
+          .row
+            .col-md-6
+              label(for='password') password
+            .col-md-6
+              input(type="password", name='password', value='', placeholder="type in ur password")
+          .row
+            .col-md-4
+            .col-md-4
+              button(type='submit' class="btn btn-primary btn-lg btn-block login-btn") 
+                span.login-using-github Sign In
+              
+            .col-md-4
+          .row
+            .col-md-4
+            .col-md-4
+              a(href="/signup", class="btn btn-primary btn-lg btn-block login-btn")
+                span.login-using-github Sign Up
+            .col-md-4
+  
+        
   .row.justify-content-center.text-center.stats-parent-container
     .col-md-3
       span.status-count #{tweetCount}

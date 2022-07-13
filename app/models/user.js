@@ -74,17 +74,20 @@ UserSchema.pre("save", function(next) {
 
 UserSchema.methods = {
   authenticate: function(plainText) {
+    console.log(this.encryptPassword(plainText), this.hashedPassword)
     return this.encryptPassword(plainText) === this.hashedPassword;
   },
 
   makeSalt: function() {
-    return Math.round(new Date().valueOf() * Math.random());
+    if(this.salt) return this.salt;
+    return bcrypt.genSaltSync(10);
   },
 
   encryptPassword: function(password) {
     if (!password) {
       return "";
     }
+    
     let salt = this.makeSalt();
     return bcrypt.hashSync(password, salt)
   },

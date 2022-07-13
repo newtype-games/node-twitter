@@ -2,7 +2,10 @@
 .tweet(data-tweetId = tweet._id)
   .row
     .col-1
-      img(class='tweet__image', src=tweet.user.github.avatar_url)
+      if(tweet.user.github)
+        img(class='tweet__image', src=tweet.user.github.avatar_url)
+      else 
+        img(class='tweet__image', src='')
     .col-11.tweet__description
       span.tweet__username-date
         span.tweet__username

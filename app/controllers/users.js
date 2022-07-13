@@ -40,8 +40,8 @@ exports.login = (req, res) => {
     });
 };
 
-exports.signup = (req, res) => {
-  res.render("pages/login", {
+exports.signup = async (req, res) => {
+  res.render("pages/signup", {
     title: "Sign up",
     user: new User()
   });
@@ -56,16 +56,34 @@ exports.session = (req, res) => {
   res.redirect("/");
 };
 
-exports.create = (req, res, next) => {
-  const user = new User(req.body);
-  user.provider = "local";
-  user
+exports.create = async (req, res, next) => {
+
+  const {name, email, password } = new User(req.body)
+  const newUser = new User();
+  newUser.name = name;
+  newUser.username = name;
+  newUser.email = email;
+  newUser.password = password;
+  
+  console.log(newUser);
+
+  newUser.provider = 'local';
+  newUser
     .save()
     .catch(error => {
-      return res.render("pages/login", { errors: error.errors, user: user });
+      return res.render("pages/login", { errors: error.errors, user: newUser });
     })
     .then(() => {
-      return req.login(user);
+      return new Promise((resolve, reject) => {
+        try{
+          req.login(newUser, ()=> {
+            resolve();
+          });  
+        }catch(e){
+          console.err(e);
+          reject(e);
+        }
+      });
     })
     .then(() => {
       return res.redirect("/");

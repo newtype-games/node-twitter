@@ -80,7 +80,7 @@ TweetSchema.methods = {
         body: comment.body,
         user: user._id,
         commenterName: user.name,
-        commenterPicture: user.github.avatar_url
+        commenterPicture: user.github ? user.github.avatar_url : ''
       });
       this.save(cb);
     } else {

@@ -2,11 +2,11 @@
 - var name = user.name ? user.name : user.username
 - var currentUserId = req.user._id.toString()
 - var userId = user._id.toString()
-- var profileURL = "https://github.com/" + user.github.login;
+- var profileURL = user.github !== undefined ? "https://github.com/" + user.github.login : '';
 
 .profile
   - if (user.github !== undefined)
-    img(class="profile__image", src=user.github.avatar_url)
+    img(class="profile__image", src=profileURL)
   .profile__user-info
     span.profile__handle
       - if (user.github !== undefined)

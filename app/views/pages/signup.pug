@@ -1,0 +1,23 @@
+extends ../layouts/default
+
+block content
+  .row
+    .col-md-4.login-container
+      h1 Node Twitter
+      form.signup_form(action='/users', method='post')
+        .row
+          .col-md-3
+            label(for='name') name
+          .col-md-3
+            input(type="text", name='name', value='', placeholder="type in ur name")
+        .row
+          .col-md-3
+            label(for='email') email
+          .col-md-3
+            input(type="text", name='email', value='', placeholder="type in ur email")
+        .row
+          .col-md-3
+            label(for='password') password
+          .col-md-3
+            input(type="password", name='password', value='', placeholder="type in ur password")
+        button.new-message__button.btn(type='submit') Sign Up
