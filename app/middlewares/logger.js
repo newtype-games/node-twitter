@@ -2,7 +2,7 @@ const winston = require('winston');
 
 const level = process.env.LOG_LEVEL || 'debug';
 
-const logger = new winston.createLogger({
+const _logger = new winston.createLogger({
   transports: [
     new winston.transports.Console({
       level: level,
@@ -13,4 +13,15 @@ const logger = new winston.createLogger({
   ]
 });
 
+const logger = {
+  log: (message)=> {
+    _logger.log("debug", message)
+  },
+  info: (message)=> {
+    _logger.info(message)
+  },
+  error:(message)=>{
+    _logger.error(message)
+  }
+}
 module.exports = logger;
